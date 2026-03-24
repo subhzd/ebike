@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Bike Guide</title>
+    <link rel="icon" type="image/png" href="eb.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        .radio-custom:checked + div {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        .radio-custom:checked + div .radio-dot {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: white; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 no-print">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3 font-bold text-xl text-brand-900">
+                <img src="eb.png" alt="E-Bike Icon" class="w-8 h-8 rounded-md bg-brand-50 hidden sm:block" onerror="this.style.display='none'">
+                E-Bike Guide
+            </div>
+            <div class="flex gap-6 items-center">
+                <a href="#calculator" class="text-sm font-medium text-slate-600 hover:text-brand-600 hidden md:block">Calculator</a>
+                <a href="#classes" class="text-sm font-medium text-slate-600 hover:text-brand-600 hidden md:block">Classes</a>
+                <a href="#local-rules" class="text-sm font-medium text-slate-600 hover:text-brand-600 hidden md:block">Local Rules</a>
+                <button onclick="window.print()" class="flex items-center gap-2 bg-brand-100 text-brand-700 px-4 py-2 rounded-lg font-medium hover:bg-brand-200 transition-colors text-sm shadow-sm">
+                    <i data-lucide="printer" class="w-4 h-4"></i> Print Guide
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-brand-900 text-white py-12 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex items-center gap-3 mb-4">
+                <i data-lucide="shield-check" class="w-8 h-8 text-brand-100"></i>
+                <span class="text-brand-100 font-semibold tracking-wider uppercase text-sm">Parent & Youth Guide</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">E-Bike or Motorcycle? <br><span class="text-brand-100">Know the California Laws.</span></h1>
+            <p class="text-lg md:text-xl text-brand-50 max-w-2xl">Many popular "e-bikes" marketed to teens are actually illegal to ride without a license. Understand the 3 e-bike classes, new 2026 safety rules, and local Santa Clara County regulations.</p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-12 space-y-16">
+
+        <!-- INTERACTIVE CALCULATOR SECTION -->
+        <section id="calculator">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-3">Is your kid's bike legal?</h2>
+                <p class="text-slate-500">Use this tool to find out if a bike is a legal E-Bike or an unregistered Motorcycle.</p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+                <div class="p-6 md:p-8 bg-slate-50 border-b border-slate-100">
+                    <div class="space-y-8">
+                        
+                        <!-- Question 1 -->
+                        <div>
+                            <p class="font-bold text-lg mb-3">1. Does the bike have fully operable pedals?</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="pedals" value="yes" class="radio-custom sr-only">
+                                    <div class="border-2 border-slate-200 rounded-xl p-4 transition-all flex items-center gap-3 hover:border-brand-100 hover:bg-slate-50">
+                                        <div class="radio-dot w-5 h-5 rounded-full border-2 border-slate-300"></div>
+                                        <span class="font-medium">Yes, it can be pedaled like a bicycle</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="pedals" value="no" class="radio-custom sr-only">
+                                    <div class="border-2 border-slate-200 rounded-xl p-4 transition-all flex items-center gap-3 hover:border-brand-100 hover:bg-slate-50">
+                                        <div class="radio-dot w-5 h-5 rounded-full border-2 border-slate-300"></div>
+                                        <span class="font-medium">No (Pegs only or pedals removed)</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div>
+                            <p class="font-bold text-lg mb-3">2. What is the motor's power output?</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="motor" value="under750" class="radio-custom sr-only">
+                                    <div class="border-2 border-slate-200 rounded-xl p-4 transition-all flex items-center gap-3 hover:border-brand-100 hover:bg-slate-50">
+                                        <div class="radio-dot w-5 h-5 rounded-full border-2 border-slate-300"></div>
+                                        <span class="font-medium">750 Watts or less</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="motor" value="over750" class="radio-custom sr-only">
+                                    <div class="border-2 border-slate-200 rounded-xl p-4 transition-all flex items-center gap-3 hover:border-brand-100 hover:bg-slate-50">
+                                        <div class="radio-dot w-5 h-5 rounded-full border-2 border-slate-300"></div>
+                                        <span class="font-medium">More than 750 Watts</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Question 3 -->
+                        <div>
+                            <p class="font-bold text-lg mb-3">3. Does it have a throttle (twist/button to move without pedaling)?</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="throttle" value="no" class="radio-custom sr-only">
+                                    <div class="border-2 border-slate-200 rounded-xl p-4 transition-all flex items-center gap-3 hover:border-brand-100 hover:bg-slate-50 h-full">
+                                        <div class="radio-dot w-5 h-5 rounded-full border-2 border-slate-300 flex-shrink-0"></div>
+                                        <span class="font-medium text-sm">No throttle (Pedal-assist only)</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="throttle" value="yes20" class="radio-custom sr-only">
+                                    <div class="border-2 border-slate-200 rounded-xl p-4 transition-all flex items-center gap-3 hover:border-brand-100 hover:bg-slate-50 h-full">
+                                        <div class="radio-dot w-5 h-5 rounded-full border-2 border-slate-300 flex-shrink-0"></div>
+                                        <span class="font-medium text-sm">Yes, but stops at 20 mph</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="throttle" value="yesOver" class="radio-custom sr-only">
+                                    <div class="border-2 border-slate-200 rounded-xl p-4 transition-all flex items-center gap-3 hover:border-brand-100 hover:bg-slate-50 h-full">
+                                        <div class="radio-dot w-5 h-5 rounded-full border-2 border-slate-300 flex-shrink-0"></div>
+                                        <span class="font-medium text-sm">Yes, powers the bike past 20 mph</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Question 4 -->
+                        <div>
+                            <p class="font-bold text-lg mb-3">4. What is the top speed the motor assists you while pedaling?</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="speed" value="20" class="radio-custom sr-only">
+                                    <div class="border-2 border-slate-200 rounded-xl p-4 transition-all flex items-center gap-3 hover:border-brand-100 hover:bg-slate-50 h-full">
+                                        <div class="radio-dot w-5 h-5 rounded-full border-2 border-slate-300 flex-shrink-0"></div>
+                                        <span class="font-medium text-sm">Up to 20 mph</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="speed" value="28" class="radio-custom sr-only">
+                                    <div class="border-2 border-slate-200 rounded-xl p-4 transition-all flex items-center gap-3 hover:border-brand-100 hover:bg-slate-50 h-full">
+                                        <div class="radio-dot w-5 h-5 rounded-full border-2 border-slate-300 flex-shrink-0"></div>
+                                        <span class="font-medium text-sm">Up to 28 mph</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="speed" value="over28" class="radio-custom sr-only">
+                                    <div class="border-2 border-slate-200 rounded-xl p-4 transition-all flex items-center gap-3 hover:border-brand-100 hover:bg-slate-50 h-full">
+                                        <div class="radio-dot w-5 h-5 rounded-full border-2 border-slate-300 flex-shrink-0"></div>
+                                        <span class="font-medium text-sm">Over 28 mph</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Result Box -->
+                <div id="result-box" class="hidden p-6 md:p-8 border-t-4 fade-in">
+                    <div class="flex items-start gap-4">
+                        <div id="result-icon-container" class="p-3 rounded-full flex-shrink-0">
+                            <!-- Icon injected via JS -->
+                        </div>
+                        <div>
+                            <h3 id="result-title" class="text-2xl font-bold mb-2"></h3>
+                            <p id="result-desc" class="text-slate-700 leading-relaxed"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE 3 CLASSES SECTION -->
+        <section id="classes">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold mb-2">The 3 Legal E-Bike Classes</h2>
+                <p class="text-slate-500">In California, an e-bike MUST fall into one of these three categories to be allowed on bike paths and roads without a license.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Class 1 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-green-500"></div>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold">Class 1</h3>
+                        <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Pedal Assist</span>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center gap-2"><i data-lucide="gauge" class="w-5 h-5 text-slate-400"></i> Max Speed: <strong>20 mph</strong></li>
+                        <li class="flex items-center gap-2"><i data-lucide="power-off" class="w-5 h-5 text-slate-400"></i> Throttle: <strong>No</strong></li>
+                        <li class="flex items-center gap-2"><i data-lucide="user" class="w-5 h-5 text-slate-400"></i> Age limit: <strong>None</strong></li>
+                    </ul>
+                    <div class="bg-slate-50 p-4 rounded-xl text-sm border border-slate-100">
+                        <p class="mb-2"><strong><i data-lucide="hard-hat" class="inline w-4 h-4 mr-1"></i> Helmet:</strong> Required if under 18.</p>
+                        <p><strong><i data-lucide="map" class="inline w-4 h-4 mr-1"></i> Access:</strong> Allowed anywhere regular bicycles are allowed.</p>
+                    </div>
+                </div>
+
+                <!-- Class 2 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-blue-500"></div>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold">Class 2</h3>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Throttle</span>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center gap-2"><i data-lucide="gauge" class="w-5 h-5 text-slate-400"></i> Max Speed: <strong>20 mph</strong></li>
+                        <li class="flex items-center gap-2"><i data-lucide="zap" class="w-5 h-5 text-slate-400"></i> Throttle: <strong>Yes</strong></li>
+                        <li class="flex items-center gap-2"><i data-lucide="user" class="w-5 h-5 text-slate-400"></i> Age limit: <strong>None</strong></li>
+                    </ul>
+                    <div class="bg-slate-50 p-4 rounded-xl text-sm border border-slate-100">
+                        <p class="mb-2"><strong><i data-lucide="hard-hat" class="inline w-4 h-4 mr-1"></i> Helmet:</strong> Required if under 18.</p>
+                        <p><strong><i data-lucide="map" class="inline w-4 h-4 mr-1"></i> Access:</strong> Generally allowed on bike paths and lanes.</p>
+                    </div>
+                </div>
+
+                <!-- Class 3 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-purple-500"></div>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold">Class 3</h3>
+                        <span class="bg-purple-100 text-purple-800 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Fast Pedal</span>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center gap-2"><i data-lucide="gauge" class="w-5 h-5 text-slate-400"></i> Max Speed: <strong>28 mph</strong></li>
+                        <li class="flex items-center gap-2"><i data-lucide="power-off" class="w-5 h-5 text-slate-400"></i> Throttle: <strong>No</strong></li>
+                        <li class="flex items-center gap-2 text-purple-700 font-bold"><i data-lucide="alert-circle" class="w-5 h-5"></i> Age limit: <strong>16+ Only</strong></li>
+                    </ul>
+                    <div class="bg-slate-50 p-4 rounded-xl text-sm border border-slate-100">
+                        <p class="mb-2 text-purple-700 font-bold"><strong><i data-lucide="hard-hat" class="inline w-4 h-4 mr-1"></i> Helmet:</strong> Required for ALL ages.</p>
+                        <p><strong><i data-lucide="map" class="inline w-4 h-4 mr-1"></i> Access:</strong> Prohibited on most off-street trails. Road lanes mostly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHAT MAKES IT A MOTORCYCLE -->
+        <section class="bg-red-50 border-2 border-red-200 rounded-3xl p-6 md:p-10 relative overflow-hidden">
+            <i data-lucide="triangle-alert" class="absolute -bottom-10 -right-10 w-64 h-64 text-red-100 opacity-50 pointer-events-none"></i>
+            <div class="relative z-10 max-w-3xl">
+                <h2 class="text-3xl font-bold text-red-800 mb-4 flex items-center">
+                    <i data-lucide="octagon-alert" class="mr-3 w-8 h-8"></i> When is it legally a Motorcycle?
+                </h2>
+                <p class="text-red-900 text-lg mb-6">If your child's "e-bike" (like a Sur-Ron, Talaria, or high-powered Super73) does any of the following, it is legally classified as a <strong>Motor-Driven Cycle or Moped</strong> by the DMV:</p>
+                
+                <ul class="space-y-3 mb-6 font-medium text-red-900">
+                    <li class="flex items-center gap-3"><i data-lucide="x-circle" class="w-5 h-5 text-red-600"></i> The motor is more than 750 Watts.</li>
+                    <li class="flex items-center gap-3"><i data-lucide="x-circle" class="w-5 h-5 text-red-600"></i> It has a throttle that propels it past 20 mph.</li>
+                    <li class="flex items-center gap-3"><i data-lucide="x-circle" class="w-5 h-5 text-red-600"></i> It assists past 28 mph.</li>
+                    <li class="flex items-center gap-3"><i data-lucide="x-circle" class="w-5 h-5 text-red-600"></i> It does not have fully operable pedals.</li>
+                </ul>
+
+                <div class="bg-white/80 p-5 rounded-xl border border-red-200 backdrop-blur-sm">
+                    <strong class="text-red-800">Consequences:</strong> Riding these on sidewalks, bike lanes, or trails is illegal. Operating them requires a valid M1 or M2 motorcycle license, DMV registration, and a DOT-approved motorcycle helmet. Kids under 16 caught riding these can have the vehicle impounded.
+                </div>
+            </div>
+        </section>
+
+        <!-- 2026 UPDATES -->
+        <section>
+            <h2 class="text-3xl font-bold mb-6">New 2026 California Laws</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="w-10 h-10 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mb-4"><i data-lucide="battery-warning"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Battery Certification</h4>
+                    <p class="text-slate-600 text-sm">To prevent fires, all e-bikes and batteries sold in CA must now meet UL 2849 safety standards. "Mystery batteries" are illegal to sell.</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center mb-4"><i data-lucide="sun-moon"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Day & Night Reflectors</h4>
+                    <p class="text-slate-600 text-sm">A rear red reflector or a red rear light with a built-in reflector is now required at ALL times—both day and night.</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center mb-4"><i data-lucide="settings-2"></i></div>
+                    <h4 class="font-bold text-lg mb-2">No Illegal Mods</h4>
+                    <p class="text-slate-600 text-sm">Using apps or "tuning" devices to unlock speeds past 28mph instantly turns the e-bike into an unregistered motor vehicle.</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="w-10 h-10 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center mb-4"><i data-lucide="graduation-cap"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Minor Violations</h4>
+                    <p class="text-slate-600 text-sm">Minors who receive a helmet violation while riding an e-bike must now complete a CHP-developed online safety training program.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SANTA CLARA COUNTY RULES -->
+        <section id="local-rules" class="bg-emerald-800 text-white rounded-3xl p-6 md:p-10 shadow-lg">
+            <h2 class="text-3xl font-bold mb-4 flex items-center">
+                <i data-lucide="map-pin" class="mr-3 w-8 h-8 text-emerald-300"></i> Santa Clara County Park Rules
+            </h2>
+            <p class="text-emerald-100 text-lg mb-8 max-w-3xl">Local jurisdictions can restrict where e-bikes are allowed. Santa Clara County Parks have specific rules to keep trails safe for hikers, horses, and cyclists.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-emerald-900/50 p-6 rounded-2xl border border-emerald-700">
+                    <h4 class="text-xl font-bold mb-4 text-emerald-200 border-b border-emerald-700 pb-2">Where you CAN Ride</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-6 h-6 text-green-400 flex-shrink-0 mt-0.5"></i>
+                            <span><strong>Class 1 and Class 2</strong> e-bikes are allowed on all paved and dirt "Class 1 bikeways" in County Parks.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-emerald-900/50 p-6 rounded-2xl border border-emerald-700">
+                    <h4 class="text-xl font-bold mb-4 text-emerald-200 border-b border-emerald-700 pb-2">Where you CANNOT Ride</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="ban" class="w-6 h-6 text-red-400 flex-shrink-0 mt-0.5"></i>
+                            <span><strong>Class 3 e-bikes are strictly PROHIBITED</strong> on County Park trails.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="ban" class="w-6 h-6 text-red-400 flex-shrink-0 mt-0.5"></i>
+                            <span>Fully motorized/battery-operated non-pedal devices are prohibited.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-yellow-500 text-yellow-950 p-5 rounded-xl font-semibold flex items-center gap-4">
+                <i data-lucide="hard-hat" class="w-8 h-8"></i>
+                <p><strong>Strict Helmet Rule:</strong> All persons, regardless of age, MUST wear an ANSI/Snell approved helmet on unpaved trails in Santa Clara County Parks.</p>
+            </div>
+        </section>
+
+        <!-- FIND SAFE ROUTES -->
+        <section class="bg-blue-50 rounded-3xl p-6 md:p-10 shadow-sm border border-blue-100">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-3 flex items-center justify-center gap-3 text-blue-900">
+                    <i data-lucide="map" class="w-8 h-8 text-blue-500"></i> Plan a Safe Route
+                </h2>
+                <p class="text-blue-700">Don't just wing it. Use these tools to find dedicated bike lanes, paths, and low-traffic streets in your area.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <!-- VTA Map -->
+                <a href="https://www.vta.org/go/bike" target="_blank" class="block bg-white p-6 rounded-2xl shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md transition-all">
+                    <i data-lucide="map-pin" class="w-8 h-8 text-blue-500 mb-4"></i>
+                    <h3 class="font-bold text-lg mb-2">VTA Bikeways Map</h3>
+                    <p class="text-slate-600 text-sm">Official Santa Clara County bike maps showing all Class 1, 2, 3, and 4 bikeways to help plan your commute.</p>
+                </a>
+                <!-- Google Maps -->
+                <a href="https://www.google.com/maps/dir/?api=1&travelmode=bicycling" target="_blank" class="block bg-white p-6 rounded-2xl shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md transition-all">
+                    <i data-lucide="navigation" class="w-8 h-8 text-green-500 mb-4"></i>
+                    <h3 class="font-bold text-lg mb-2">Google Maps</h3>
+                    <p class="text-slate-600 text-sm">Always switch to the "Cycling" layer before starting navigation to find bike-friendly routes and avoid highways.</p>
+                </a>
+                <!-- Strava/Komoot -->
+                <a href="https://komoot.com" target="_blank" class="block bg-white p-6 rounded-2xl shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md transition-all">
+                    <i data-lucide="compass" class="w-8 h-8 text-orange-500 mb-4"></i>
+                    <h3 class="font-bold text-lg mb-2">Komoot / Strava</h3>
+                    <p class="text-slate-600 text-sm">Great smartphone apps for finding popular cycling routes and community-vetted safe paths.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- OFFICIAL LINKS -->
+        <section class="border-t border-slate-200 pt-10 no-print">
+            <h3 class="text-xl font-bold mb-4">Official Guidance & Resources</h3>
+            <div class="flex flex-wrap gap-4">
+                <a href="https://parks.santaclaracounty.gov/things-do/hike-and-ride/bike-county-parks" target="_blank" class="inline-flex items-center gap-2 bg-white border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-50 transition-colors font-medium">
+                    <i data-lucide="external-link" class="w-4 h-4 text-slate-500"></i> Santa Clara County Parks E-Bike Rules
+                </a>
+                <a href="https://www.dmv.ca.gov/portal/vehicle-registration/new-registration/motorcycles-mopeds-and-scooters/" target="_blank" class="inline-flex items-center gap-2 bg-white border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-50 transition-colors font-medium">
+                    <i data-lucide="external-link" class="w-4 h-4 text-slate-500"></i> CA DMV Motorcycle & Moped Definitions
+                </a>
+                <a href="https://www.chp.ca.gov/programs-services/programs/california-motorcyclist-safety/motorcycles-and-similar-vehicles" target="_blank" class="inline-flex items-center gap-2 bg-white border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-50 transition-colors font-medium">
+                    <i data-lucide="external-link" class="w-4 h-4 text-slate-500"></i> CHP Vehicle Guidelines
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center mt-12">
+        <p class="text-sm">Created for educational purposes. Laws are subject to change; always refer to official CA state and local ordinances.</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Interactive Checker Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('input[type="radio"]');
+            inputs.forEach(input => {
+                input.addEventListener('change', evaluateBike);
+            });
+        });
+
+        function evaluateBike() {
+            const pedals = document.querySelector('input[name="pedals"]:checked')?.value;
+            const motor = document.querySelector('input[name="motor"]:checked')?.value;
+            const throttle = document.querySelector('input[name="throttle"]:checked')?.value;
+            const speed = document.querySelector('input[name="speed"]:checked')?.value;
+            
+            const resultBox = document.getElementById('result-box');
+            const resultTitle = document.getElementById('result-title');
+            const resultDesc = document.getElementById('result-desc');
+            const resultIconContainer = document.getElementById('result-icon-container');
+
+            // Wait until all questions are answered
+            if (!pedals || !motor || !throttle || !speed) {
+                return; 
+            }
+
+            // Reset classes
+            resultBox.className = 'p-6 md:p-8 border-t-4 fade-in block';
+            resultIconContainer.className = 'p-3 rounded-full flex-shrink-0';
+            
+            // Re-trigger animation by cloning and replacing
+            const newBox = resultBox.cloneNode(true);
+            resultBox.parentNode.replaceChild(newBox, resultBox);
+            
+            // Update references after clone
+            const updatedBox = document.getElementById('result-box');
+            const title = document.getElementById('result-title');
+            const desc = document.getElementById('result-desc');
+            const iconContainer = document.getElementById('result-icon-container');
+
+            // --- LOGIC EVALUATION ---
+
+            // 1. Check for Motorcycle / Illegal E-bike traits
+            if (pedals === 'no' || motor === 'over750' || throttle === 'yesOver' || speed === 'over28') {
+                updatedBox.classList.add('bg-red-50', 'border-red-500');
+                iconContainer.classList.add('bg-red-100', 'text-red-600');
+                iconContainer.innerHTML = '<i data-lucide="alert-triangle" class="w-8 h-8"></i>';
+                title.textContent = 'Motorcycle / Moped (Not a legal E-Bike)';
+                title.classList.add('text-red-900');
+                desc.innerHTML = 'This vehicle exceeds California limits for an e-bike. It is legally considered a <strong>Motor-Driven Cycle or Moped</strong>. <br><br><strong>Rules:</strong> Requires an M1 or M2 driver\'s license, DMV registration, and a DOT-approved motorcycle helmet. It is ILLEGAL for kids under 16, and ILLEGAL on bike paths, trails, and sidewalks.';
+            } 
+            // 2. Class 3 Checks
+            else if (speed === '28') {
+                if (throttle !== 'no') {
+                    // CA law states Class 3 cannot have a throttle. 
+                    updatedBox.classList.add('bg-orange-50', 'border-orange-500');
+                    iconContainer.classList.add('bg-orange-100', 'text-orange-600');
+                    iconContainer.innerHTML = '<i data-lucide="siren" class="w-8 h-8"></i>';
+                    title.textContent = 'Out of Class (Requires Modification)';
+                    title.classList.add('text-orange-900');
+                    desc.innerHTML = 'Under CA law, a Class 3 e-bike (assists up to 28mph) <strong>cannot have a throttle</strong>. A bike with a throttle and 28mph assist falls outside legal definitions unless the throttle is removed/disabled or software-locked to 20mph.';
+                } else {
+                    updatedBox.classList.add('bg-purple-50', 'border-purple-500');
+                    iconContainer.classList.add('bg-purple-100', 'text-purple-600');
+                    iconContainer.innerHTML = '<i data-lucide="zap-fast" class="w-8 h-8"></i>';
+                    title.textContent = 'Class 3 E-Bike';
+                    title.classList.add('text-purple-900');
+                    desc.innerHTML = '<strong><i data-lucide="user" class="inline w-4 h-4 mr-1"></i> Age limit:</strong> Must be 16 or older.<br><strong><i data-lucide="hard-hat" class="inline w-4 h-4 mr-1"></i> Helmet:</strong> REQUIRED for all ages.<br><strong><i data-lucide="map" class="inline w-4 h-4 mr-1"></i> Where:</strong> Allowed in bike lanes on roads. PROHIBITED on most off-street trails and Santa Clara County Parks.';
+                }
+            }
+            // 3. Class 2 Check
+            else if (throttle === 'yes20') {
+                updatedBox.classList.add('bg-blue-50', 'border-blue-500');
+                iconContainer.classList.add('bg-blue-100', 'text-blue-600');
+                iconContainer.innerHTML = '<i data-lucide="bike" class="w-8 h-8"></i>';
+                title.textContent = 'Class 2 E-Bike';
+                title.classList.add('text-blue-900');
+                desc.innerHTML = '<strong><i data-lucide="user" class="inline w-4 h-4 mr-1"></i> Age limit:</strong> None.<br><strong><i data-lucide="hard-hat" class="inline w-4 h-4 mr-1"></i> Helmet:</strong> Required if under 18.<br><strong><i data-lucide="map" class="inline w-4 h-4 mr-1"></i> Where:</strong> Allowed on most bike paths, bike lanes, and Santa Clara County Parks "Class 1" bikeways.';
+            }
+            // 4. Class 1 Check
+            else {
+                updatedBox.classList.add('bg-green-50', 'border-green-500');
+                iconContainer.classList.add('bg-green-100', 'text-green-600');
+                iconContainer.innerHTML = '<i data-lucide="bike" class="w-8 h-8"></i>';
+                title.textContent = 'Class 1 E-Bike';
+                title.classList.add('text-green-900');
+                desc.innerHTML = '<strong><i data-lucide="user" class="inline w-4 h-4 mr-1"></i> Age limit:</strong> None.<br><strong><i data-lucide="hard-hat" class="inline w-4 h-4 mr-1"></i> Helmet:</strong> Required if under 18.<br><strong><i data-lucide="map" class="inline w-4 h-4 mr-1"></i> Where:</strong> Allowed anywhere traditional bikes are allowed, including Santa Clara County Parks.';
+            }
+
+            // Re-render icons inside the dynamic text
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
